@@ -31,14 +31,14 @@
                     Študent <%= current_user.email %>
                   </li>
                   <li>
-                    <%= link_to 'Odjava', destroy_user_session_path, method: :destroy %>
+                    <%= link_to 'Odjava', destroy_user_session_path, method: :delete %>
                   </li>
                 <% elsif instructor_signed_in? %>
                   <li>
                     Inštruktor <%= current_instructor.email %>
                   </li>
                   <li>
-                    <%= link_to 'Odjava', destroy_instructor_session_path, method: :destroy %>
+                    <%= link_to 'Odjava', destroy_instructor_session_path, method: :delete %>
                   </li>
                 <% else %>
                   <li>
@@ -54,7 +54,16 @@
       </div>
       <!-- /.container -->
   </nav>
-
+  <% flash.each do |name, msg| %>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="flash_<%= "#{name}" %>" class="alert-<%= name %>">
+            <a class="close" data-dismiss="alert">&#215;</a>
+            <%= content_tag :div, msg %>
+          </div>
+        </div>
+      </div>
+  <% end %>
   <!-- Page Content -->
   <div class="container">
     <%= yield %>

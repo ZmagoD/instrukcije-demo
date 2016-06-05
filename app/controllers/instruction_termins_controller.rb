@@ -1,12 +1,20 @@
 class InstructionTerminsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: :create
+  before_action :authenticate_instructor!, only: :index
   
-  def new
+  def index
+    @instruction_termins = InstructionTermin.find_by_user(current_user)
   end
   
   def create
-  end
-  
-  def index
+    @instruction_termin = InstructionTermin.new(user_id: current_user.id, instruction_id: params[:instruction_id])
+    
+    if @instruction_termin.save
+      flash[:success] = "Uspešno ste se prijavili na inštukcije"
+      redirect_to root_path
+    else
+      flash[:error] = 'Prijava je bila neuspešna'
+      redirect_to root_path
+    end
   end
 end

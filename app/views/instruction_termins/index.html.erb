@@ -1,0 +1,11 @@
+<div class="col-md-8 col-md-offset-2">
+  <h1>Prijave na inštrukcije</h1>
+  <%= link_to 'Nazaj', root_path, class: 'btn btn-lg btn-danger' %>
+  <% @instruction_termins.each do |termin| %>
+    <div class="well">
+      <h3>Študent se prijavlja na inštrukcije iz predmeta <%= termin.instruction.predmet %></h3>
+      <p>Email študenta: <%= termin.user.email %></p>
+      <p>Termin predavanja: <%= termin.instruction.termin.to_formatted_s(:long) %></p>
+    </div>
+  <% end %>
+</div>
