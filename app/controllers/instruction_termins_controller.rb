@@ -3,7 +3,7 @@ class InstructionTerminsController < ApplicationController
   before_action :authenticate_instructor!, only: :index
   
   def index
-    @instruction_termins = InstructionTermin.find_by_user(current_user)
+    @instruction_termins = InstructionTermin.find_by_instructor(current_instructor)
   end
   
   def create

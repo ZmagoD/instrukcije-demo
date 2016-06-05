@@ -11,13 +11,18 @@
             <p>Prost termin: <%= instruction.termin.to_formatted_s(:long) %></p>
             <p>Cena: <%= instruction.cena %> €</p>
             <% if user_signed_in? %>
-              <%= bootstrap_form_for( :instruction_termin, url: take_instruction_termin_path(instruction) ) do |f| %>
-                <%= f.submit 'Prijava', class: 'btn btn-lg btn-warning' %>
-              <% end %>
-            <% end %>
-            <% if instructor_signed_in? %>
+                <% if already_signed(instruction, current_user) %>
+                  <%= bootstrap_form_for( :instruction_termin, url: take_instruction_termin_path(instruction) ) do |f| %>
+                    <%= f.submit 'Prijava', class: 'btn btn-lg btn-warning' %>
+                  <% end %>
+                <% end %>
+            <% elsif instructor_signed_in? %>
                 <%= link_to 'Popravi oglas', edit_instructor_instruction_path(current_instructor, instruction), class:'btn btn-sm btn-warning' %>
                 <%= link_to 'Izbriši oglas', instructor_instruction_path(current_instructor, instruction), class:'btn btn-sm btn-danger', method: :delete%>
+            <% else %>
+                <%= bootstrap_form_for( :instruction_termin, url: take_instruction_termin_path(instruction) ) do |f| %>
+                    <%= f.submit 'Prijava', class: 'btn btn-lg btn-warning' %>
+                <% end %>         
             <% end %>
         </div>
     <% end %>
